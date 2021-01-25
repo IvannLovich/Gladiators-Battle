@@ -98,9 +98,25 @@ class Killer extends Gladiator {
 }
 
 class Wizar extends Gladiator {
-  constructor(...args) {
-    super(...args);
+  constructor(life, damage, stamina, mana) {
+    super(life, damage, stamina);
+    this.mana = mana;
   }
+
+  attackAction(target, weapon) {
+    if (weapon !== undefined) {
+      if (target.defense !== undefined) {
+        target.defense = 0;
+        target.life = 0 + 1;
+      } else {
+        target.life = 0;
+      }
+    } else {
+      throw new Error('You need an element to attack!');
+    }
+    return [target.life, target.defense];
+  }
+
   getMedicine() {
     this._life += 2;
     return this._life;
@@ -179,10 +195,11 @@ class Doctor extends Gladiator {
 
 const warrior = new Warrior(390, 100, 8, 80);
 const kill = new Killer(400, 90, 20);
-const wz = new Wizar(420, 110, 10);
+const wz = new Wizar(420, 110, 10, 40);
 const doc = new Doctor(25, 10, 8, 30);
 
 const gladiators = [warrior, kill, wz, doc];
+
 
 while (gladiators.length > 1) {
   const twoWarriors = _.sampleSize(gladiators, [(n = 2)]);
@@ -191,7 +208,7 @@ while (gladiators.length > 1) {
   const random = Math.floor(Math.random() * Math.floor(2));
   const ifZeroOrOne = random === 0 ? random + 1 : random - 1;
 
-  if (twoWarriors[random] instanceof Doctor) {
+  if (twoWarriors[random] instanceof Doctor || twoWarriors[random] instanceof Wizar) {
     twoWarriors[random].attackAction(
       twoWarriors[ifZeroOrOne],
       twoWarriors[random].mana,
