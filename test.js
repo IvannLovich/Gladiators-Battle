@@ -184,8 +184,6 @@ const doc = new Doctor(25, 10, 8, 30);
 
 const gladiators = [warrior, kill, wz, doc];
 
-console.log('Gladiators at the start', gladiators);
-
 while (gladiators.length > 1) {
   const twoWarriors = _.sampleSize(gladiators, [(n = 2)]);
   console.log(twoWarriors);
