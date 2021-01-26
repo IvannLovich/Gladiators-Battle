@@ -97,10 +97,21 @@ class Killer extends Gladiator {
   }
 }
 
-class Wizar extends Gladiator {
+class Wizard extends Gladiator {
   constructor(life, damage, stamina, mana) {
     super(life, damage, stamina);
     this.mana = mana;
+  }
+
+  get mana() {
+    return this._mana;
+  }
+
+  set mana(value) {
+    if (typeof value !== 'number') {
+      throw new Error('Mana attribute must be a number');
+    }
+    this._mana = value;
   }
 
   attackAction(target, weapon) {
@@ -195,11 +206,10 @@ class Doctor extends Gladiator {
 
 const warrior = new Warrior(390, 100, 8, 80);
 const kill = new Killer(400, 90, 20);
-const wz = new Wizar(420, 110, 10, 40);
+const wz = new Wizard(420, 110, 10, 40);
 const doc = new Doctor(25, 10, 8, 30);
 
 const gladiators = [warrior, kill, wz, doc];
-
 
 while (gladiators.length > 1) {
   const twoWarriors = _.sampleSize(gladiators, [(n = 2)]);
@@ -208,12 +218,15 @@ while (gladiators.length > 1) {
   const random = Math.floor(Math.random() * Math.floor(2));
   const ifZeroOrOne = random === 0 ? random + 1 : random - 1;
 
-  if (twoWarriors[random] instanceof Doctor || twoWarriors[random] instanceof Wizar) {
+  if (
+    twoWarriors[random] instanceof Doctor ||
+    twoWarriors[random] instanceof Wizard
+  ) {
     twoWarriors[random].attackAction(
       twoWarriors[ifZeroOrOne],
       twoWarriors[random].mana,
     );
-    if (twoWarriors[ifZeroOrOne] instanceof Wizar) {
+    if (twoWarriors[ifZeroOrOne] instanceof Wizard) {
       twoWarriors[ifZeroOrOne].life < 10 &&
         twoWarriors[ifZeroOrOne].getMedicine();
     }
