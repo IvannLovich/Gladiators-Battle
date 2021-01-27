@@ -117,8 +117,13 @@ class Wizard extends Gladiator {
   attackAction(target, weapon) {
     if (weapon !== undefined) {
       if (target.defense !== undefined) {
-        target.defense = 0;
-        target.life = 0 + 1;
+        if (this._damage > target.defense) {
+          target.defense = 0;
+          target.life = 2;
+        } else if (this._damage <= target.defense) {
+          this._life += target.defense;
+          target.defense -= this._damage;
+        }
       } else {
         target.life = 0;
       }
