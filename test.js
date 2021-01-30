@@ -44,7 +44,7 @@ class Gladiator {
   }
   attackAction(target, weapon) {
     if (weapon !== undefined) {
-      if (target.defense !== undefined) {
+      if (target.defense > 0 || target.defense !== undefined) {
         if (this._damage > target.defense) {
           target.life = target.life + target.defense - this._damage;
           target.defense = 0;
@@ -59,7 +59,6 @@ class Gladiator {
     } else {
       throw new Error('You need an element to attack!');
     }
-    return [target.life, target.defense];
   }
 }
 
@@ -75,10 +74,15 @@ class Killer extends Gladiator {
     super(...args);
   }
 
-  attackAction(target, weapon) {
-    this._damage += 10;
-    const killerAttack = super.attackAction(target, weapon) - this._damage;
-    return killerAttack;
+  get damage() {
+    return this._damage;
+  }
+
+  set damage(value) {
+    if (typeof value !== 'number') {
+      throw new Error('Damage attribute must be a number');
+    }
+    this._damage = value + 20;
   }
 }
 
@@ -86,6 +90,17 @@ class Wizard extends Gladiator {
   constructor(life, damage, stamina, mana) {
     super(life, damage, stamina);
     this.mana = mana;
+  }
+
+  get damage() {
+    return this._damage;
+  }
+
+  set damage(value) {
+    if (typeof value !== 'number') {
+      throw new Error('Damage attribute must be a number');
+    }
+    this._damage = value + 50;
   }
 
   get mana() {
@@ -97,12 +112,6 @@ class Wizard extends Gladiator {
       throw new Error('Mana attribute must be a number');
     }
     this._mana = value;
-  }
-
-  attackAction(target, weapon) {
-    this._damage += 40;
-    const wizardFireBall = super.attackAction(target, weapon) - this._damage;
-    return wizardFireBall;
   }
 
   getMedicine() {
@@ -183,7 +192,7 @@ class Doctor extends Gladiator {
 
 const warrior = new Warrior(390, 100, 8, 80);
 const kill = new Killer(400, 90, 20);
-const wz = new Wizard(420, 110, 10, 40);
+const wz = new Wizard(420, 110, 40, 10, 40);
 const doc = new Doctor(25, 10, 8, 30);
 
 const gladiators = [warrior, kill, wz, doc];
