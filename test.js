@@ -192,7 +192,7 @@ class Doctor extends Gladiator {
 
 const warrior = new Warrior(390, 100, 8, 80);
 const kill = new Killer(400, 90, 20);
-const wz = new Wizard(420, 110, 40, 10, 40);
+const wz = new Wizard(420, 110, 10, 40);
 const doc = new Doctor(25, 10, 8, 30);
 
 const gladiators = [warrior, kill, wz, doc];
