@@ -76,24 +76,9 @@ class Killer extends Gladiator {
   }
 
   attackAction(target, weapon) {
-    this._damage += 5;
-    if (weapon !== undefined) {
-      if (target.defense !== undefined) {
-        if (this._damage > target.defense) {
-          target.life = target.life + target.defense - this._damage;
-          target.defense = 0;
-        } else {
-          target.defense -= this._damage;
-        }
-      } else if (this._damage > target.life) {
-        target.life = 0;
-      } else {
-        target.life -= this._damage;
-      }
-    } else {
-      throw new Error('You need an element to attack!');
-    }
-    return [target.life, target.defense];
+    this._damage += 10;
+    const killerAttack = super.attackAction(target, weapon) - this._damage;
+    return killerAttack;
   }
 }
 
@@ -115,22 +100,9 @@ class Wizard extends Gladiator {
   }
 
   attackAction(target, weapon) {
-    if (weapon !== undefined) {
-      if (target.defense !== undefined) {
-        if (this._damage > target.defense) {
-          target.defense = 0;
-          target.life = 2;
-        } else if (this._damage <= target.defense) {
-          this._life += target.defense;
-          target.defense -= this._damage;
-        }
-      } else {
-        target.life = 0;
-      }
-    } else {
-      throw new Error('You need an element to attack!');
-    }
-    return [target.life, target.defense];
+    this._damage += 40;
+    const wizardFireBall = super.attackAction(target, weapon) - this._damage;
+    return wizardFireBall;
   }
 
   getMedicine() {
