@@ -67,6 +67,16 @@ class Warrior extends Gladiator {
     super(life, damage, stamina);
     this._defense = defense;
   }
+  get defense() {
+    return this._defense;
+  }
+
+  set defense(value) {
+    if (typeof value !== 'number') {
+      throw new Error('Defense attribute must be a number');
+    }
+    this._defense = value;
+  }
 }
 
 class Killer extends Gladiator {
