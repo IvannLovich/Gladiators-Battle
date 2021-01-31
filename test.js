@@ -2,9 +2,9 @@ const _ = require('lodash');
 
 class Gladiator {
   constructor(life, damage, stamina) {
-    this.life = life;
-    this.damage = damage;
-    this.stamina = stamina;
+    this._life = life;
+    this._damage = damage;
+    this._stamina = stamina;
   }
 
   get life() {
@@ -65,7 +65,7 @@ class Gladiator {
 class Warrior extends Gladiator {
   constructor(life, damage, stamina, defense) {
     super(life, damage, stamina);
-    this.defense = defense;
+    this._defense = defense;
   }
 }
 
@@ -89,7 +89,7 @@ class Killer extends Gladiator {
 class Wizard extends Gladiator {
   constructor(life, damage, stamina, mana) {
     super(life, damage, stamina);
-    this.mana = mana;
+    this._mana = mana;
   }
 
   get damage() {
@@ -123,7 +123,7 @@ class Wizard extends Gladiator {
 class Doctor extends Gladiator {
   constructor(life, damage, stamina, mana) {
     super(life, damage, stamina);
-    this.mana = mana;
+    this._mana = mana;
   }
 
   get life() {
